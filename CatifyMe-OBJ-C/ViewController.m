@@ -19,6 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
     [self configureURLDisplay];
     [_activityMonitor setHidesWhenStopped:YES];
     [self setViewForFetching];

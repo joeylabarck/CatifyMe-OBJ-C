@@ -17,6 +17,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self registerForLocalNotifications];
     return YES;
 }
 
@@ -40,6 +41,31 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+- (void)registerForLocalNotifications {
+    UIUserNotificationType types = UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+    UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
+    [self scheduleLocalNotifications];
+}
+
+- (void)scheduleLocalNotifications {
+    UILocalNotification *localNotif = [UILocalNotification new];
+    
+    NSDate *today = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond) fromDate:today];
+    [components setHour:0];
+    [components setMinute:43];
+    [components setSecond:0];
+    NSDate *start = [calendar dateFromComponents:components];
+    localNotif.fireDate = start;
+    localNotif.repeatInterval = NSCalendarUnitHour;
+    localNotif.alertBody = @"You have a new cat waiting for you!";
+    localNotif.soundName = UILocalNotificationDefaultSoundName;
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
 }
 
 @end

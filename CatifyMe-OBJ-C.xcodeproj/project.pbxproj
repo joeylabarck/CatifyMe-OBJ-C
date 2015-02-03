@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D47B459F1A747C38001DBDD2 /* CatConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = D47B459E1A747C38001DBDD2 /* CatConstants.m */; };
+		D47B45A31A747D03001DBDD2 /* CatConnectionLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D47B45A21A747D03001DBDD2 /* CatConnectionLayer.m */; };
 		D4BEF54A1A71638A0096B42D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BEF5491A71638A0096B42D /* main.m */; };
 		D4BEF54D1A71638A0096B42D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BEF54C1A71638A0096B42D /* AppDelegate.m */; };
 		D4BEF5501A71638A0096B42D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BEF54F1A71638A0096B42D /* ViewController.m */; };
@@ -27,6 +29,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D47B459D1A747C38001DBDD2 /* CatConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatConstants.h; sourceTree = "<group>"; };
+		D47B459E1A747C38001DBDD2 /* CatConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatConstants.m; sourceTree = "<group>"; };
+		D47B45A11A747D03001DBDD2 /* CatConnectionLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatConnectionLayer.h; sourceTree = "<group>"; };
+		D47B45A21A747D03001DBDD2 /* CatConnectionLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatConnectionLayer.m; sourceTree = "<group>"; };
 		D4BEF5441A71638A0096B42D /* CatifyMe-OBJ-C.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CatifyMe-OBJ-C.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4BEF5481A71638A0096B42D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4BEF5491A71638A0096B42D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -60,6 +66,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D47B45A01A747C3C001DBDD2 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				D47B459D1A747C38001DBDD2 /* CatConstants.h */,
+				D47B459E1A747C38001DBDD2 /* CatConstants.m */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
 		D4BEF53B1A71638A0096B42D = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +96,7 @@
 		D4BEF5461A71638A0096B42D /* CatifyMe-OBJ-C */ = {
 			isa = PBXGroup;
 			children = (
+				D47B45A01A747C3C001DBDD2 /* Constants */,
 				D4BEF54B1A71638A0096B42D /* AppDelegate.h */,
 				D4BEF54C1A71638A0096B42D /* AppDelegate.m */,
 				D4BEF54E1A71638A0096B42D /* ViewController.h */,
@@ -89,6 +105,8 @@
 				D4BEF5541A71638A0096B42D /* Images.xcassets */,
 				D4BEF5561A71638A0096B42D /* LaunchScreen.xib */,
 				D4BEF5471A71638A0096B42D /* Supporting Files */,
+				D47B45A11A747D03001DBDD2 /* CatConnectionLayer.h */,
+				D47B45A21A747D03001DBDD2 /* CatConnectionLayer.m */,
 			);
 			path = "CatifyMe-OBJ-C";
 			sourceTree = "<group>";
@@ -168,6 +186,7 @@
 				TargetAttributes = {
 					D4BEF5431A71638A0096B42D = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 8262MR9E7Y;
 					};
 					D4BEF55C1A71638A0096B42D = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -219,8 +238,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D47B45A31A747D03001DBDD2 /* CatConnectionLayer.m in Sources */,
 				D4BEF5501A71638A0096B42D /* ViewController.m in Sources */,
 				D4BEF54D1A71638A0096B42D /* AppDelegate.m in Sources */,
+				D47B459F1A747C38001DBDD2 /* CatConstants.m in Sources */,
 				D4BEF54A1A71638A0096B42D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -343,9 +364,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "CatifyMe-OBJ-C/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -353,9 +377,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "CatifyMe-OBJ-C/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -412,6 +439,7 @@
 				D4BEF5691A71638A0096B42D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D4BEF56A1A71638A0096B42D /* Build configuration list for PBXNativeTarget "CatifyMe-OBJ-CTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +448,7 @@
 				D4BEF56C1A71638A0096B42D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -99,16 +99,27 @@
     UIAlertAction *saveAction = [UIAlertAction actionWithTitle:@"Save Image" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         UIImageWriteToSavedPhotosAlbum(_imageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:nil];
-    UIAlertAction *shareAction = [UIAlertAction actionWithTitle:@"Share" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-        NSLog(@"Share..");
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *shareAction = [UIAlertAction actionWithTitle:@"Share Image" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        if ([MFMessageComposeViewController canSendText] && [MFMessageComposeViewController canSendAttachments]) {
+            //Create Message
+            MFMessageComposeViewController *messageController = [MFMessageComposeViewController new];
+            messageController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+            messageController.messageComposeDelegate = self;
+            messageController.body = @"Check out this cat I found on CatifyMe!";
+            BOOL isAttached = [messageController addAttachmentData:UIImageJPEGRepresentation(_imageView.image, 1) typeIdentifier:@"image/jpeg" filename:@"Cat.png"];
+            if (isAttached)
+                NSLog(@"Attached!");
+            [self presentViewController:messageController animated:YES completion:nil];
+            
+        }
     }];
     UIAlertAction *copyLinkAction = [UIAlertAction actionWithTitle:@"Copy Link" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
         pasteboard.string = _urlDisplay.text;
     }];
         
-    //[saveImageAlertController addAction:shareAction];
+    [saveImageAlertController addAction:shareAction];
     [saveImageAlertController addAction:saveAction];
     [saveImageAlertController addAction:copyLinkAction];
     [saveImageAlertController addAction:cancelAction];
@@ -134,7 +145,12 @@
     _urlDisplay.text = sourceURL;
     _progressLabel.text = nil;
     [_activityMonitor stopAnimating];
-    
+}
+
+#pragma mark - MFMessageComposeViewControllerDelegate
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

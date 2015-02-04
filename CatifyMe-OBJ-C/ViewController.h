@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "CatConnectionLayer.h"
 
-@interface ViewController : UIViewController <CatDelegate, UIGestureRecognizerDelegate, UINavigationBarDelegate>
+@import MessageUI;
+
+@interface ViewController : UIViewController <CatDelegate, UIGestureRecognizerDelegate, UINavigationBarDelegate, MFMessageComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *urlDisplay;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityMonitor;

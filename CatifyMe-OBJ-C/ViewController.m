@@ -86,9 +86,12 @@
 - (void)refresh:(UITapGestureRecognizer *)tap {
     [_tapRecognizer setEnabled:NO];
     [self setViewForFetching];
-    CatConnectionLayer *connectionLayer = [CatConnectionLayer new];
-    connectionLayer.delegate = self;
-    [connectionLayer getNewCat];
+    //CatConnectionLayer *connectionLayer = [CatConnectionLayer new];
+    //connectionLayer.delegate = self;
+    //[connectionLayer getNewCat];
+    SwiftConnectionLayer *swiftConnectionLayer = [SwiftConnectionLayer new];
+    [swiftConnectionLayer getNewCat];
+    swiftConnectionLayer.delegate = self;
 }
 
 - (void)save:(UILongPressGestureRecognizer *)lpg {
@@ -147,6 +150,17 @@
     NSOperationQueue *UIQueue = [NSOperationQueue mainQueue];
     [UIQueue addOperationWithBlock:^{
         _imageView.image = catImage;
+        _urlDisplay.text = sourceURL;
+        _progressLabel.text = nil;
+        [_activityMonitor stopAnimating];
+        [_tapRecognizer setEnabled:YES];
+    }];
+}
+
+- (void)receivedNewCatWithSourceURL:(UIImage * __nonnull)image sourceURL:(NSString * __nonnull)sourceURL {
+    NSOperationQueue *UIQueue = [NSOperationQueue mainQueue];
+    [UIQueue addOperationWithBlock:^{
+        _imageView.image = image;
         _urlDisplay.text = sourceURL;
         _progressLabel.text = nil;
         [_activityMonitor stopAnimating];

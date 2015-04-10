@@ -10,13 +10,12 @@
 
 @implementation CatConstants
 
-NSString * const kCatifyMeURLString = @"http://www.catify.me/api/";
-
-NSString * const kDataKey = @"data";
-NSString * const kImagesKey = @"images";
-NSString * const kImageKey = @"image";
-NSString * const kIDKey = @"id";
-NSString * const kSourceURLKey = @"source_url";
-NSString * const kURLKey = @"url";
+NSString * const kCatifyMeURLString =   @"http://www.catify.me/api/";
+NSString * const kDataKey =             @"data";
+NSString * const kImagesKey =           @"images";
+NSString * const kImageKey =            @"image";
+NSString * const kIDKey =               @"id";
+NSString * const kSourceURLKey =        @"source_url";
+NSString * const kURLKey =              @"url";
 
 @end

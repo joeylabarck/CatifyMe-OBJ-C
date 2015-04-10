@@ -15,8 +15,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *urlDisplay;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityMonitor;
-@property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
-@property (strong, nonatomic) UILongPressGestureRecognizer *longTapRecognizer;
+@property (nonatomic) UITapGestureRecognizer *tapRecognizer;
+@property (nonatomic) UILongPressGestureRecognizer *longTapRecognizer;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 @property (weak, nonatomic) IBOutlet UILabel *progressLabel;
 

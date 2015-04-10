@@ -84,7 +84,7 @@
 #pragma mark - Gesture Handling
 
 - (void)refresh:(UITapGestureRecognizer *)tap {
-    //NSLog(@"Refresh");
+    [_tapRecognizer setEnabled:NO];
     [self setViewForFetching];
     CatConnectionLayer *connectionLayer = [CatConnectionLayer new];
     connectionLayer.delegate = self;
@@ -141,10 +141,14 @@
 #pragma mark - CatDelegate Method
 
 - (void)receivedNewCat:(UIImage *)catImage withSourceURL:(NSString *)sourceURL {
-    _imageView.image = catImage;
-    _urlDisplay.text = sourceURL;
-    _progressLabel.text = nil;
-    [_activityMonitor stopAnimating];
+    NSOperationQueue *UIQueue = [NSOperationQueue mainQueue];
+    [UIQueue addOperationWithBlock:^{
+        _imageView.image = catImage;
+        _urlDisplay.text = sourceURL;
+        _progressLabel.text = nil;
+        [_activityMonitor stopAnimating];
+        [_tapRecognizer setEnabled:YES];
+    }];
 }
 
 #pragma mark - MFMessageComposeViewControllerDelegate

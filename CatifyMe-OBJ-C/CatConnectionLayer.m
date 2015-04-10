@@ -9,11 +9,21 @@
 #import "CatConnectionLayer.h"
 #import "CatConstants.h"
 
+@interface CatConnectionLayer ()
+@property NSOperationQueue *downloadQueue;
+@end
+
 @implementation CatConnectionLayer
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _downloadQueue = [[NSOperationQueue alloc] init];
+    }
+    return self;
+}
+
 - (void)getNewCat {
-    
-    //Start Connection to the API, and receive picture and source url
     [self startConnection];
 }
 
@@ -21,45 +31,27 @@
 - (void)startConnection {
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:kCatifyMeURLString]];
     request.HTTPMethod = @"POST";
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
-    if (connection) {
-        [connection start];
-    }
+    [NSURLConnection sendAsynchronousRequest:request queue:_downloadQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if (![NSThread isMainThread]) {
+            NSDictionary *responseDictionary = [[NSDictionary alloc] initWithDictionary:[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]];
+            [self parseJSONDictionary:responseDictionary];
+        }
+    }];
 }
 
 // Grabs Image url and source url from the dictionary
-- (void)parseJSONDictionary:(NSDictionary *)json
-{
-    NSDictionary *imageDescriptor = [NSDictionary new];
-    imageDescriptor = [[[json objectForKey:kDataKey] objectForKey:kImagesKey] objectForKey:kImageKey];
-    idString = [imageDescriptor objectForKey:kIDKey];
-    urlString = [imageDescriptor objectForKey:kURLKey];
-    sourceURLString = [imageDescriptor objectForKey:kSourceURLKey];
+- (void)parseJSONDictionary:(NSDictionary *)json {
+    if (![NSThread isMainThread]) {
+        NSDictionary *imageDescriptor = [NSDictionary new];
+        imageDescriptor = [[[json objectForKey:kDataKey] objectForKey:kImagesKey] objectForKey:kImageKey];
+        idString = [imageDescriptor objectForKey:kIDKey];
+        urlString = [imageDescriptor objectForKey:kURLKey];
+        sourceURLString = [imageDescriptor objectForKey:kSourceURLKey];
     
-    //NSLog(@"Image Descriptor:\nID: %@\nSource URL: %@\nURL: %@", idString,sourceURLString,urlString);
+        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]]];
     
-    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]]];
-    
-    [self.delegate receivedNewCat:image withSourceURL:urlString];
-    
-}
-
-#pragma mark - NSURLConnectionDataDelegate Methods
-
-// This delegate method, informs the receiver that data has been received, and in turns converts the NSData object to a JSON Serialized NSDictionary object
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    //NSLog(@"Data: %@", data);
-    NSDictionary *responseDictionary = [NSDictionary new];
-    responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    [self parseJSONDictionary:responseDictionary];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    //NSLog(@"Response: %@", response);
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    //NSLog(@"Error: %@", error);
+        [self.delegate receivedNewCat:image withSourceURL:urlString];
+    }
 }
 
 @end
